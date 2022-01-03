@@ -11,7 +11,8 @@ const StyledBoardWrapper = styled.div`
 
 const StyledBoard = styled.div`
   background: #b89874;
-  border: solid 2px #3a3a3a;
+  border: solid 1px #3a3a3a;
+  border-radius: 3px;
   box-shadow: rgb(60 60 60 / 50%) 4px 8px 12px 1px;
   z-index: 1;
 `;
@@ -20,7 +21,7 @@ const StyledRow = styled.div`
   display: flex;
 `;
 
-function GoGang() {
+function Gobang() {
   const Squares = Array(19).fill(Array(19).fill(null));
   const [board, setBoard] = useState(Squares);
 
@@ -43,4 +44,4 @@ function GoGang() {
   );
 }
 
-export default GoGang;
+export default Gobang;

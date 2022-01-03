@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import GoGang from "./GoGang";
+import Gobang from "./Gobang";
 
-ReactDOM.render(<GoGang />, document.getElementById("root"));
+ReactDOM.render(<Gobang />, document.getElementById("root"));

@@ -8,7 +8,7 @@ const Square = styled.div`
     content: "";
     height: 100%;
     width: 2px;
-    background: #3a3a3a;
+    background: #51402c;
     position: absolute;
     left: 50%;
     ${(props) => (props.row === 18 ? "height:50%;" : "")}; //最後一排
@@ -18,7 +18,7 @@ const Square = styled.div`
     content: "";
     width: 100%;
     height: 2px;
-    background: #3a3a3a;
+    background: #51402c;
     position: absolute;
     top: 50%;
     ${(props) => (props.col === 18 ? "width: 56%;" : "")}; //最後一欄

@@ -9,5 +9,5 @@ const StyledInfos = styled.div`
 `;
 
 export default function Gameinfos() {
-  return <StyledInfos>GoGang</StyledInfos>;
+  return <StyledInfos>Gobang</StyledInfos>;
 }
