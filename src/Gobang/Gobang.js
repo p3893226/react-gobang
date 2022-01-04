@@ -24,12 +24,29 @@ const StyledRow = styled.div`
 function Gobang() {
   const Squares = Array(19).fill(Array(19).fill(null));
   const [board, setBoard] = useState(Squares);
+  const [blackIsNext, setBlackIsNext] = useState(true);
+
+  const handleChessClick = (position) => {
+    const { x, y } = position;
+    const boardCopy = JSON.parse(JSON.stringify(board));
+    boardCopy[y][x] = blackIsNext ? "black" : "white";
+    setBoard(boardCopy);
+    setBlackIsNext(!blackIsNext);
+  };
 
   const currentSquares = board.map((row, y) => (
     <StyledRow key={y}>
       {row.map((col, x) => {
         const position = { x, y };
-        return <GameSquare key={x} position={position}></GameSquare>;
+        return (
+          <GameSquare
+            key={x}
+            position={position}
+            handleChessClick={handleChessClick}
+            blackIsNext={blackIsNext}
+            board={board}
+          ></GameSquare>
+        );
       })}
     </StyledRow>
   ));
