@@ -47,31 +47,53 @@ const StyledChess = styled.div`
   ${(props) =>
     props.value === "black" &&
     `
-  &::before {
-    position: absolute;
-    content: "";
+  {
+    position: relative;
     width: 24px;
     height: 24px;
     border-radius: 50%;
     background-color: black;
     z-index: 3;
     top:19%;
-    left:19%;
+    left:16%;
+    box-shadow: 2px 2px 2px 0px rgba(30, 30, 30, 0.7);
+    border: 1px solid #353530;
+    &::after{
+      position: absolute;
+      content: "";
+      width: 3px;
+      height: 2px;
+      border-radius: 66%;
+      top: 4px;
+      left: 5px;
+      background: #cecece;
+    }
   }
   `}
   ${(props) =>
     props.value === "white" &&
     `
-  &::before {
-    position: absolute;
-    content: "";
+  {
+    position: relative;
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background-color: white;
+    background-color: #dfdfdf;
     z-index: 3;
     top:19%;
-    left:19%;
+    left:16%;
+    box-shadow:2px 2px 2px 0px rgba(30, 30, 30, 0.7);
+    border: 1px solid #aeaeae;
+    &::after{
+      position: absolute;
+      content: "";
+      width: 3px;
+      height: 2px;
+      border-radius: 66%;
+      top: 4px;
+      left: 5px;
+      background: #ffffff;
+    }
   }
   `}
 `;

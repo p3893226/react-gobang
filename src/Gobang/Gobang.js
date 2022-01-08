@@ -1,6 +1,6 @@
 import GameSquare from "./components/GameSquare";
 import Gameinfos from "./components/Gameinfos";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 
 const StyledBoardWrapper = styled.div`
@@ -25,13 +25,22 @@ function Gobang() {
   const Squares = Array(19).fill(Array(19).fill(null));
   const [board, setBoard] = useState(Squares);
   const [blackIsNext, setBlackIsNext] = useState(true);
+  const [currentPosition, setCurrentPosition] = useState(null);
 
   const handleChessClick = (position) => {
     const { x, y } = position;
+    console.log("X:" + x, "Y:" + y);
+    if (board[y][x]) return;
     const boardCopy = JSON.parse(JSON.stringify(board));
     boardCopy[y][x] = blackIsNext ? "black" : "white";
     setBoard(boardCopy);
+    setCurrentPosition(position);
     setBlackIsNext(!blackIsNext);
+  };
+
+  const handleCalculateWinner = () => {
+    const { currentX, currentY } = currentPosition;
+    const lastColor = board[currentY][currentX];
   };
 
   const currentSquares = board.map((row, y) => (
