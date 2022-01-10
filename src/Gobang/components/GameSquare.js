@@ -45,10 +45,10 @@ const Square = styled.div`
 
 const StyledChess = styled.div`
   ${(props) =>
-    props.value === "black" &&
+    props.value === "Black" &&
     `
   {
-    position: relative;
+    position: absolute;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -71,10 +71,10 @@ const StyledChess = styled.div`
   }
   `}
   ${(props) =>
-    props.value === "white" &&
+    props.value === "White" &&
     `
   {
-    position: relative;
+    position: absolute;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -102,14 +102,14 @@ export default function GameSquare({
   position,
   handleChessClick,
   board,
-  blackIsNext,
+  isBlackNext,
 }) {
   const { x, y } = position;
   const chessClick = () => {
     handleChessClick(position);
   };
   return (
-    <Square row={y} col={x} onClick={chessClick} blackIsNext={blackIsNext}>
+    <Square row={y} col={x} onClick={chessClick} blackIsNext={isBlackNext}>
       <span />
       <StyledChess value={board[y][x]} />
     </Square>

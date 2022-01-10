@@ -1,6 +1,6 @@
 import GameSquare from "./components/GameSquare";
 import Gameinfos from "./components/Gameinfos";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledBoardWrapper = styled.div`
@@ -24,24 +24,51 @@ const StyledRow = styled.div`
 function Gobang() {
   const Squares = Array(19).fill(Array(19).fill(null));
   const [board, setBoard] = useState(Squares);
-  const [blackIsNext, setBlackIsNext] = useState(true);
-  const [currentPosition, setCurrentPosition] = useState(null);
+  const [isBlackNext, setIsBlackNext] = useState(true);
+  const [winner, setWinner] = useState(null);
+  const lastX = useRef();
+  const lastY = useRef();
 
   const handleChessClick = (position) => {
     const { x, y } = position;
-    console.log("X:" + x, "Y:" + y);
-    if (board[y][x]) return;
+    if (board[y][x] || winner) return;
+    lastX.current = x;
+    lastY.current = y;
     const boardCopy = JSON.parse(JSON.stringify(board));
-    boardCopy[y][x] = blackIsNext ? "black" : "white";
+    boardCopy[y][x] = isBlackNext ? "Black" : "White";
     setBoard(boardCopy);
-    setCurrentPosition(position);
-    setBlackIsNext(!blackIsNext);
+    setIsBlackNext(!isBlackNext);
   };
 
-  const handleCalculateWinner = () => {
-    const { currentX, currentY } = currentPosition;
+  const handleGetWinner = (board, currentX, currentY) => {
+    if (currentX === undefined || currentY === undefined) return;
     const lastColor = board[currentY][currentX];
+    function calculateConnect(dirX, dirY) {
+      let counter = 0;
+      let tempX = currentX;
+      let tempY = currentY;
+      do {
+        tempX += dirX;
+        tempY += dirY;
+        if (board[tempY] && board[tempY][tempX] === lastColor) counter++;
+      } while (board[tempY] && board[tempY][tempX] === lastColor);
+      return counter;
+    }
+    if (
+      calculateConnect(-1, 0) + calculateConnect(1, 0) >= 4 ||
+      calculateConnect(0, -1) + calculateConnect(0, 1) >= 4 ||
+      calculateConnect(-1, -1) + calculateConnect(1, 1) >= 4 ||
+      calculateConnect(1, -1) + calculateConnect(-1, 1) >= 4
+    ) {
+      return lastColor;
+    }
+    return null;
   };
+  useEffect(() => {
+    if (handleGetWinner(board, lastX.current, lastY.current)) {
+      setWinner(handleGetWinner(board, lastX.current, lastY.current));
+    }
+  }, [board, winner]);
 
   const currentSquares = board.map((row, y) => (
     <StyledRow key={y}>
@@ -52,7 +79,7 @@ function Gobang() {
             key={x}
             position={position}
             handleChessClick={handleChessClick}
-            blackIsNext={blackIsNext}
+            isBlackNext={isBlackNext}
             board={board}
           ></GameSquare>
         );
@@ -64,7 +91,7 @@ function Gobang() {
     <>
       <StyledBoardWrapper>
         <StyledBoard>{currentSquares}</StyledBoard>
-        <Gameinfos />
+        <Gameinfos isBlackNext={isBlackNext} winner={winner}></Gameinfos>
       </StyledBoardWrapper>
     </>
   );
